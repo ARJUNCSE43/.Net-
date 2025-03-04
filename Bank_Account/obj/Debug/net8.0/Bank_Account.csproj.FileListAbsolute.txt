@@ -1,0 +1,14 @@
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\bin\Debug\net8.0\Bank_Account.exe
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\bin\Debug\net8.0\Bank_Account.deps.json
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\bin\Debug\net8.0\Bank_Account.runtimeconfig.json
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\bin\Debug\net8.0\Bank_Account.dll
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\bin\Debug\net8.0\Bank_Account.pdb
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.AssemblyInfoInputs.cache
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.AssemblyInfo.cs
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.dll
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\refint\Bank_Account.dll
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.pdb
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\Bank_Account.genruntimeconfig.cache
+C:\Users\USER\source\repos\Bank_Account\Bank_Account\obj\Debug\net8.0\ref\Bank_Account.dll
