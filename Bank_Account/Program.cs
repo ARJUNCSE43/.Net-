@@ -80,7 +80,7 @@ class Account
     {
         Dictionary<int, BankAccount> accounts = new Dictionary<int, BankAccount>();//Generic
         List<int> numbers = new List<int>();//Predicate Delegate
-        Predicate<int> isEven = (a) => a % 2 == 0;
+        
 
         BankAccount account = null;
         while (true)
@@ -91,7 +91,7 @@ class Account
             Console.WriteLine("3.Withdraw");
             Console.WriteLine("4.Check Balance");
             Console.WriteLine("5.Apply Interest(Saving Account)");
-            Console.WriteLine("6.Print All Even Bankaccount number: ");
+            Console.WriteLine("6.Print All Saving Account number: ");
             Console.WriteLine("7.Exit");
             Console.WriteLine("Choose an option: ");
             int choice = Convert.ToInt32(Console.ReadLine());
@@ -154,6 +154,7 @@ class Account
                     if (!accounts.ContainsKey(Acc_number))
                     {
                         numbers.Add(Acc_number);
+
                         Console.WriteLine("Enter Account Holder Name: ");
                         string name = Console.ReadLine();
                         Console.WriteLine("Initial Balance");
@@ -235,10 +236,18 @@ class Account
             }
             else if(choice == 6 && account != null) 
             {
-                    List<int> Evennumber = numbers.FindAll(isEven);
-                    Console.WriteLine($"The even bankaccount number: "+string.Join(", ", Evennumber));
 
 
+                Predicate<BankAccount> isSavingAccount = acc => acc is SavingAccount;
+                List<int>saving=new List<int>();
+                foreach(var ac in accounts)
+                {
+                    if(isSavingAccount(ac.Value))
+                    {
+                        saving.Add(ac.Key);
+                    }
+                }
+               Console.WriteLine($"Saving Account number: "+string.Join(", ",saving));
              }
             else{
                   
