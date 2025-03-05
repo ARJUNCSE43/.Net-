@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 
 using System;
+using System.ComponentModel.Design;
 class BankAccount
 {
     public int Account_number { get; set; }
@@ -77,8 +78,9 @@ class Account
 {
     public static void Main(string[] args)
     {
-        Dictionary<int, BankAccount> accounts = new Dictionary<int, BankAccount>();
-
+        Dictionary<int, BankAccount> accounts = new Dictionary<int, BankAccount>();//Generic
+        List<int> numbers = new List<int>();//Predicate Delegate
+        Predicate<int> isEven = (a) => a % 2 == 0;
 
         BankAccount account = null;
         while (true)
@@ -89,9 +91,11 @@ class Account
             Console.WriteLine("3.Withdraw");
             Console.WriteLine("4.Check Balance");
             Console.WriteLine("5.Apply Interest(Saving Account)");
-            Console.WriteLine("6.Exit");
+            Console.WriteLine("6.Print All Even Bankaccount number: ");
+            Console.WriteLine("7.Exit");
             Console.WriteLine("Choose an option: ");
             int choice = Convert.ToInt32(Console.ReadLine());
+
             if (choice == 1)
             {
                 Console.WriteLine("Enter Account Type(1-Regular,2-saving): ");
@@ -103,10 +107,15 @@ class Account
                 {
                     Console.WriteLine("Enter your account number: ");
                     int Acc_number = Convert.ToInt32(Console.ReadLine());
+                 
+                    
 
                     if (!accounts.ContainsKey(Acc_number))
                     {
-
+                        
+                        numbers.Add(Acc_number);
+                       
+                        
                         Console.WriteLine("Enter Account Holder Name: ");
                         string name = Console.ReadLine();
                         Console.WriteLine("Initial Balance");
@@ -124,6 +133,8 @@ class Account
                             Console.WriteLine("put valid Amount");
                             Console.WriteLine();
                         }
+                       
+
                         account = new BankAccount(Acc_number, name, balance);
                         accounts.Add(Acc_number, account);
 
@@ -142,7 +153,7 @@ class Account
                     int Acc_number = Convert.ToInt32(Console.ReadLine());
                     if (!accounts.ContainsKey(Acc_number))
                     {
-
+                        numbers.Add(Acc_number);
                         Console.WriteLine("Enter Account Holder Name: ");
                         string name = Console.ReadLine();
                         Console.WriteLine("Initial Balance");
@@ -222,10 +233,17 @@ class Account
                 }
 
             }
-            else
+            else if(choice == 6 && account != null) 
             {
-                break;
-            }
+                    List<int> Evennumber = numbers.FindAll(isEven);
+                    Console.WriteLine($"The even bankaccount number: "+string.Join(", ", Evennumber));
+
+
+             }
+            else{
+                  
+                    break;
+             }
         }
     }
 }
