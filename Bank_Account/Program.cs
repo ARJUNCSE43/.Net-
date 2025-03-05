@@ -7,16 +7,12 @@ class BankAccount
     public int Account_number { get; set; }
     public string Name { get; set; }
     public double Balance { get; set; }
-    public Double IniterestRate { get; set; }
-    public BankAccount(int account_number, string name, double initialBalance, double rate=0)
+
+    public BankAccount(int account_number, string name, double initialbalance)
     {
         Account_number = account_number;
         Name = name;
-        Balance = initialBalance;
-        IniterestRate = rate;
-        
-
-
+        Balance = initialbalance;
     }
 
     public void Deposite(double balance)
@@ -48,24 +44,40 @@ class BankAccount
     {
         Console.WriteLine($"The current balance now: " + Balance);
     }
-    public void ApplyInterest()
-    {
-        if (IniterestRate > 0)
-        {
-            double interest = Balance * (IniterestRate / 100);
-            Balance += interest;
-            Console.WriteLine("Interest: " + interest + " new Amount: " + Balance);
-        }
-    }
+
 }
 
+class SavingAccount : BankAccount
+{
+    public double InterestRate { get; set; }
 
- 
-    class Account
+    public SavingAccount(int accountNumber, string name, double initialbalance, double interestRate)
+        : base(accountNumber, name, initialbalance)
+    {
+        InterestRate = interestRate;
+    }
+
+    public void ApplyInterest()
+    {
+        if (InterestRate > 0)
+        {
+            double interest = Balance * (InterestRate / 100);
+            Balance += interest;
+            Console.WriteLine($"Interest applied: {interest}, new balance: {Balance}");
+        }
+        else
+        {
+            Console.WriteLine("No interest applied due to non-positive interest rate.");
+        }
+    }
+
+}
+
+class Account
 {
     public static void Main(string[] args)
     {
-        Dictionary<string, string> Names = new Dictionary<string, string>();
+        Dictionary<int, BankAccount> accounts = new Dictionary<int, BankAccount>();
 
 
         BankAccount account = null;
@@ -84,43 +96,85 @@ class BankAccount
             {
                 Console.WriteLine("Enter Account Type(1-Regular,2-saving): ");
                 int type = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter your account number: ");
-                int Acc_number = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter Account Holder Name: ");
-                string name = Console.ReadLine();
-                Console.WriteLine("Initial Balance");
-                Double balance = Convert.ToDouble(Console.ReadLine());
-                try
-                {
-                    if (balance < 0) { throw new Exception("Balance cannot be negative!"); }
-                    Console.WriteLine($"Balance: {balance}");
-                    
-                     
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("Something went wrong");
-                    Console.WriteLine();
-                }
+
+
 
                 if (type == 1)
                 {
-                    account = new BankAccount(Acc_number, name, balance);
-                  
-                    Console.WriteLine("Successful your account");
-                    Console.WriteLine();
+                    Console.WriteLine("Enter your account number: ");
+                    int Acc_number = Convert.ToInt32(Console.ReadLine());
+
+                    if (!accounts.ContainsKey(Acc_number))
+                    {
+
+                        Console.WriteLine("Enter Account Holder Name: ");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Initial Balance");
+                        Double balance = Convert.ToDouble(Console.ReadLine());
+                        try
+                        {
+                            if (balance < 0) { throw new Exception("Balance cannot be negative!"); }
+                            Console.WriteLine($"Balance: {balance}");
+                            Console.WriteLine("Successful your account");
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("put valid Amount");
+                            Console.WriteLine();
+                        }
+                        account = new BankAccount(Acc_number, name, balance);
+                        accounts.Add(Acc_number, account);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("This account is already taken");
+                    }
+
                 }
-                else
+
+                else if (type == 2)
                 {
 
-                    Console.WriteLine("Enter Interent");
-                    double interest = Convert.ToDouble(Console.ReadLine());
-                    account = new BankAccount(Acc_number, name, balance,interest);
+                    Console.WriteLine("Enter your account number: ");
+                    int Acc_number = Convert.ToInt32(Console.ReadLine());
+                    if (!accounts.ContainsKey(Acc_number))
+                    {
 
-                    Console.WriteLine("Successful your account");
+                        Console.WriteLine("Enter Account Holder Name: ");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Initial Balance");
+                        Double balance = Convert.ToDouble(Console.ReadLine());
+                        try
+                        {
+                            if (balance < 0) { throw new Exception("Balance cannot be negative!"); }
+                            Console.WriteLine($"Balance: {balance}");
+
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("put valid Amount"); break;
+                            Console.WriteLine();
+                        }
+                        Console.WriteLine("Enter Interent");
+                        double interest = Convert.ToDouble(Console.ReadLine());
+                        account = new SavingAccount(Acc_number, name, balance, interest);
+                        accounts.Add(Acc_number, account);
+                        Console.WriteLine("Successful your account");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("This account is already taken");
+                    }
 
 
                 }
+
 
             }
             else if (choice == 2 && account != null)
@@ -134,22 +188,39 @@ class BankAccount
             else if (choice == 3 && account != null)
             {
                 Console.WriteLine("Enter the number of Amount: ");
+                try
+                {
+                    double amount = Convert.ToDouble(Console.ReadLine());
+                    if (account.Balance - amount < 0)
+                    {
+                        throw new Exception("Insufficient balance");
+                    }
+                    account.Withdraw(amount);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Plz put in valid Amount");
 
-                double amount = Convert.ToDouble(Console.ReadLine());
-                account.Withdraw(amount);
+                }
             }
             else if (choice == 4 && account != null)
             {
                 account.showbalance();
-                
+
             }
             else if (choice == 5 && account != null)
             {
 
-                
-                
-                account.ApplyInterest();
-                
+
+                if (account is SavingAccount savingAccount)
+                {
+                    savingAccount.ApplyInterest();
+                }
+                else
+                {
+                    Console.WriteLine("Interest application is only available for saving accounts.");
+                }
+
             }
             else
             {
